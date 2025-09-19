@@ -455,6 +455,12 @@
 
             const exprContent = exprItems.map(item => item.querySelector('.experience-content'));
 
+            function calcExprHeaderLeft() {
+                const windowWidth = document.body.scrollWidth;
+                const headerLeft = (windowWidth - 1600) / 2 + parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--expr-header-padding'));
+                return Math.max(headerLeft, parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--expr-header-padding')));
+            }
+
             window.addEventListener('scroll', function () {
                 const scrollY = window.scrollY;
                 const windowHeight = window.innerHeight;
@@ -483,11 +489,23 @@
                         title.style.left = 'var(--expr-header-padding)';
                         title.style.top = '0';
                         title.style.bottom = 'auto';
+                        title.style.left = `${calcExprHeaderLeft()}px`;
                     } else {
                         title.style.position = 'absolute';
                         title.style.left = 'var(--expr-header-padding)';
                         title.style.top = '0';
                         title.style.bottom = 'auto';
+                    }
+                }
+            });
+
+            window.addEventListener('resize', function () {
+                for (let i = 0; i < exprItems.length; ++i) {
+                    const item = exprItems[i];
+                    const title = exprTitles[i];
+
+                    if (title.style.position === 'fixed') {
+                        title.style.left = `${calcExprHeaderLeft()}px`;
                     }
                 }
             });
