@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume - Xiaolan Yao</title>
+    <style>
+        :root {
+            --primary-color: #667085;
+            --secondary-color: #D0D5DD;
+
+            --header-height: calc(max(800px, 100vh));
+            --header-top: calc(var(--header-height) * 0.4);
+            --header-photo-size: 300px;
+            --header-photo-size-half: calc(var(--header-photo-size) / 2);
+            --header-photo-border-size: 10px;
+            --header-padding: 2rem;
+            --header-name-size: 4rem;
+
+            --expr-header-padding: 120px;
+            --expr-header-size: 400px;
+            --expr-work-company-icon-size: 60px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #ccc;
+            font-family: sans-serif;
+        }
+
+        section {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        #header {
+            position: relative;
+            height: calc(max(800px, 100vh));
+            background-color: white;
+        }
+
+        #header-photo-border {
+            width: var(--header-photo-size);
+            height: var(--header-photo-size);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+            border-radius: 50%;
+            position: absolute;
+            top: calc(var(--header-top) - var(--header-photo-size-half));
+            left: calc(50% - var(--header-photo-size-half));
+        }
+
+        #photo {
+            width: calc(var(--header-photo-size) - 2 * var(--header-photo-border-size));
+            height: calc(var(--header-photo-size) - 2 * var(--header-photo-border-size));
+            background-color: #777;
+            border-radius: 50%;
+            position: absolute;
+            top: var(--header-photo-border-size);
+            left: var(--header-photo-border-size);
+        }
+
+        #header-tags-container {
+            position: absolute;
+            top: calc(var(--header-top) + var(--header-photo-size-half) + var(--header-padding));
+            left: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        #header-tags-container > span {
+            display: inline-block;
+            color: #666;
+            height: 2rem;
+            line-height: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 0 0.5rem;
+            padding: 0 1rem;
+            font-size: 0.8rem;
+        }
+
+        #header-name {
+            position: absolute;
+            top: calc(var(--header-top) + var(--header-photo-size-half) + 3 * var(--header-padding));
+            line-height: var(--header-name-size);
+            font-size: var(--header-name-size);
+            text-align: center;
+            width: 100%;
+            height: 3rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        #header-name > span {
+            color: var(--primary-color);
+        }
+
+        #header-description {
+            position: absolute;
+            top: calc(var(--header-top) + var(--header-photo-size-half) + 3 * var(--header-padding) + var(--header-name-size) + var(--header-padding));
+            width: 100%;
+            height: 1rem;
+            line-height: 1rem;
+            text-align: center;
+            color: var(--primary-color);
+            font-size: 1rem;
+            padding: 0;
+        }
+
+        #header-contact-container {
+            position: absolute;
+            top: calc(var(--header-top) + var(--header-photo-size-half) + 3 * var(--header-padding) + var(--header-name-size) + var(--header-padding) + 1rem + var(--header-padding));
+            width: 100%;
+            text-align: center;
+            height: 3rem;
+        }
+
+        #header-contact {
+            display: inline-block;
+            text-decoration: none;
+            color: var(--primary-color);
+            height: 3rem;
+            line-height: 3rem;
+            border: 1px solid var(--primary-color);
+            border-radius: 1.5rem;
+            padding: 0 2rem;
+            transition-duration: 0.3s;
+            font-weight: 700;
+        }
+
+        #header-contact:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        #experience {
+            position: relative;
+            background-color: white;
+        }
+
+        .experience-item {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .experience-item > h2 {
+            font-size: 2.2rem;
+            padding: 2rem 2rem 0 0;
+            margin: 0;
+            text-align: left;
+            font-weight: 900;
+            box-sizing: border-box;
+            width: calc(var(--expr-header-size) - var(--expr-header-padding));
+
+            /* updated by javascript */
+            position: absolute;
+            left: var(--expr-header-padding);
+            top: 0;
+        }
+
+        .experience-item > h2 > span {
+            color: var(--primary-color);
+        }
+
+        .experience-item > .experience-content {
+            margin-left: var(--expr-header-size);
+            padding-right: var(--expr-header-padding);
+            box-sizing: border-box;
+            color: var(--primary-color);
+            line-height: 1.5rem;
+        }
+
+        .experience-item > .experience-content > p:first-child {
+            margin-top: 0;
+        }
+
+        .experience-item > .experience-content > p:last-child {
+            margin-bottom: 0;
+        }
+
+        .expr-work-history, .expr-edu-history, .expr-vol-history {
+            margin: 2rem 0;
+            border: 1px solid var(--secondary-color);
+            padding: 1rem 1rem 1rem calc(2rem + var(--expr-work-company-icon-size));
+            border-radius: 0.5rem;
+            position: relative;
+        }
+
+        .expr-work-history:first-child, .expr-edu-history:first-child, .expr-vol-history:first-child {
+            margin-top: 0;
+        }
+
+        .expr-work-history:last-child, .expr-edu-history:last-child, .expr-vol-history:last-child {
+            margin-bottom: 0;
+        }
+
+        .expr-work-company-icon, .expr-edu-company-icon, .expr-vol-company-icon {
+            position: absolute;
+            left: 1rem;
+            top: 1rem;
+            width: var(--expr-work-company-icon-size);
+            height: var(--expr-work-company-icon-size);
+            border: 1px solid var(--secondary-color);
+            border-radius: 0.3rem;
+            box-sizing: border-box;
+            padding: 6px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .expr-work-company-icon > img, .expr-edu-company-icon > img, .expr-vol-company-icon > img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .expr-work-company, .expr-edu-company, .expr-vol-company {
+            margin-top: 0;
+            margin-bottom: 0.3rem;
+            line-height: 1em;
+            color: black;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .expr-work-role, .expr-edu-role, .expr-vol-role {
+            line-height: 1em;
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+            margin-bottom: 1em;
+        }
+
+        .expr-work-duration, .expr-edu-duration, .expr-vol-duration {
+            line-height: 1em;
+            font-size: 0.9rem;
+            color: black;
+            margin-bottom: 1em;
+        }
+
+        .expr-work-responsibilities, .expr-edu-responsibilities, .expr-vol-responsibilities {
+            margin: 0 0 0 -40px;
+            padding-left: 40px;
+            list-style-type: "> ";
+            font-size: 0.9rem;
+        }
+
+        .expr-skill-header {
+            color: black;
+            margin-top: 2rem;
+        }
+
+        .expr-skill-header:first-child {
+            margin-top: 0;
+        }
+
+        .expr-tag-list {
+            margin: 1rem 0;
+            border: 1px solid var(--secondary-color);
+            padding: 0.5rem 1rem 1rem 1rem;
+            border-radius: 0.5rem;
+        }
+
+        .expr-tag-list > span {
+            display: inline-block;
+            color: var(--primary-color);
+            height: 2rem;
+            line-height: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 0.5rem 0.5rem 0 0;
+            padding: 0 1rem;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+
+<body>
+    <section id="header">
+        <div id="header-photo-border">
+            <img id="photo" src="photo.jpg" alt="Xiaolan Yao Photo" />
+        </div>
+        <div id="header-tags-container">
+            <span>Brand Communication</span>
+            <span>Digital Storytelling</span>
+            <span>Marketing Strategy</span>
+        </div>
+        <h1 id="header-name">Xiaolan <span>Yao</span></h1>
+        <div id="header-description">Over 8 years of experience in building strong connections with diverse audiences.</div>
+        <div id="header-contact-container"><a id="header-contact" href="https://www.linkedin.com/in/xiaolan-yao-a5244a367/" target="_blank">Get in Touch</a></div>
+    </section>
+    <section id="experience">
+        <div class="experience-item">
+            <h2>My <span>Journey</span></h2>
+            <div class="experience-content">
+                <p>I began my career as a journalist at <i>The Paper</i>, where I learned the power of words to uncover truth and
+                    spark conversation. Covering breaking news and deep investigative stories, I developed a sharp eye for detail
+                    and a deep respect for accuracy and integrity. Those years taught me not only how to write under pressure, but
+                    also how to listen—to people, to context, and to the world in change.</p>
+                <p>From there, my path led me into brand communications with Meione, one of China's fastest-growing e-commerce
+                    innovators. I shifted from reporting the news to shaping stories, creating campaigns that reached millions
+                    across digital platforms. Whether managing influencer partnerships, launching new products, or leading my team
+                    through high-stakes campaigns, I learned how strategy and creativity can come together to inspire action and
+                    trust.</p>
+                <p>Along the way, I also found meaning in work that connects people and communities, whether through organizing
+                    charity events for children with autism, supporting local coffee culture, or volunteering at shelters and
+                    cultural institutions. These experiences remind me that communications is not just about content, but about
+                    people: building bridges, amplifying voices, and creating moments that matter.</p>
+            </div>
+        </div>
+        <div class="experience-item">
+            <h2>Work <span>History</span></h2>
+            <div class="experience-content">
+                <div class="expr-work-history">
+                    <div class="expr-work-company-icon"><img src="meione_logo.jpg" alt="Meione Logo" /></div>
+                    <h3 class="expr-work-company">Meione</h3>
+                    <p class="expr-work-role">Senior Communications &amp; Brand Strategy Manager</p>
+                    <p class="expr-work-duration">Shanghai, China | May 2021 - May 2025</p>
+                    <ul class="expr-work-responsibilities">
+                        <li>Developed and executed cross-platform social media strategies for B2C departments, generating 2-3 weekly short-form brand stories and 1-2 monthly long-form thought pieces across different social media platforms.</li>
+                        <li>Led local brand campaigns and experiential activations for self-owned coffee brand, Nevermind Cafe—including seasonal launches, community events, and charity initiatives—positioning it among China's Top 10 coffee brands during key retail seasons.</li>
+                        <li>Managed monthly follower events and offline test-eat programs, collecting feedback and driving iterative product and service improvements.</li>
+                        <li>Drafted and managed creative briefs for B2B campaigns, aligning storytelling with strategic product and partner launches; supported over 7,000 brand collaborations across beauty, food, 3C, and fashion.</li>
+                        <li>Partnered with 20+ creators to scale influencer impact; contributed to cumulative 1.7B+ followers across Meione's social channels.</li>
+                        <li>Supervised an 8-person cross-functional team; created onboarding and training guides to ensure alignment in tone, brand values, and creative execution.</li>
+                    </ul>
+                </div>
+                <div class="expr-work-history">
+                    <div class="expr-work-company-icon"><img src="thepaper_logo.jpg" alt="The Paper Logo" /></div>
+                    <h3 class="expr-work-company">The Paper</h3>
+                    <p class="expr-work-role">Senior Journalist &amp; Content Lead</p>
+                    <p class="expr-work-duration">Shanghai, China | Jul 2017 - May 2021</p>
+                    <ul class="expr-work-responsibilities">
+                        <li>Reported breaking news and exclusive investigative stories, including the Boeing 737 MAX accident coverage and COVID-19 follow-ups; 5 reports received national awards.</li>
+                        <li>Produced over 2,300 high-impact articles and editorial features with a focus on policy shifts, corporate strategy, and public interest narratives.</li>
+                        <li>Created long-form content and multimedia packages; collaborated with design and digital teams to enhance engagement.</li>
+                        <li>Trained junior writers on tone consistency, research standards, and ethical reporting.</li>
+                    </ul>
+                </div>
+                <div class="expr-work-history">
+                    <div class="expr-work-company-icon"><img src="zpmu_logo.jpg" alt="Zhejiang Province Media Union Logo" /></div>
+                    <h3 class="expr-work-company">Zhejiang Province Media Union</h3>
+                    <p class="expr-work-role">League President</p>
+                    <p class="expr-work-duration">Hangzhou, China | Apr 2016 - May 2017</p>
+                    <ul class="expr-work-responsibilities">
+                        <li>Managed a network of 100+ campus media contributors; led internal communications and newsletter production.</li>
+                        <li>Oversaw event communications and branding for regional media training camps and campus summits.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="experience-item">
+            <h2>Education &<span> Courses</span></h2>
+            <div class="experience-content">
+                <div class="expr-edu-history">
+                    <div class="expr-edu-company-icon"><img src="uw_logo.jpg" alt="University of Washington Logo" /></div>
+                    <h3 class="expr-edu-company">University of Washington</h3>
+                    <p class="expr-edu-role">Master's in Communication, Communities and Networks</p>
+                    <p class="expr-edu-duration">Seattle, WA, USA | Aug 2025 - Mar 2027 (expected)</p>
+                </div>
+                <div class="expr-edu-history">
+                    <div class="expr-edu-company-icon"><img src="zju_logo.jpg" alt="Zhejiang University Logo" /></div>
+                    <h3 class="expr-edu-company">Zhejiang University</h3>
+                    <p class="expr-edu-role">Bachelor's degree, Journalism</p>
+                    <p class="expr-edu-duration">Hangzhou, China | Sep 2013 - Jun 2017</p>
+                </div>
+            </div>
+        </div>
+        <div class="experience-item">
+            <h2>Skill <span>Set</span></h2>
+            <div class="experience-content">
+                <h3 class="expr-skill-header">Brand Communication</h3>
+                <div class="expr-tag-list">
+                    <span>Project Management</span>
+                    <span>Brand Strategy</span>
+                    <span>Content Creation</span>
+                    <span>Campaign Planning</span>
+                    <span>Event Marketing</span>
+                    <span>Business Analysis</span>
+                </div>
+                <h3 class="expr-skill-header">Product</h3>
+                <div class="expr-tag-list">
+                    <span>Microsoft Office</span>
+                    <span>Adobe Suite</span>
+                    <span>Google Workspace</span>
+                    <span>Canva</span>
+                </div>
+            </div>
+        </div>
+        <div class="experience-item">
+            <h2>Volunteer <span>Experiences</span></h2>
+            <div class="experience-content">
+                <div class="expr-vol-history">
+                    <div class="expr-vol-company-icon"><img src="seattle_humane_logo.jpg" alt="Seattle Humane Logo" /></div>
+                    <h3 class="expr-vol-company">Seattle Humane</h3>
+                    <p class="expr-vol-role">Volunteer</p>
+                    <p class="expr-vol-duration">Bellevue, WA, USA | May 2025 - Present</p>
+                    <ul class="expr-vol-responsibilities">
+                        <li>Support shelter operations by maintaining a clean and safe environment, assisting with feeding, observation, and socialization of cats to promote adoption readiness.</li>
+                    </ul>
+                </div>
+                <div class="expr-vol-history">
+                    <div class="expr-vol-company-icon"><img src="nevermind_cafe_logo.jpg" alt="Meione / Nevermind Café Logo" /></div>
+                    <h3 class="expr-vol-company">Meione / Nevermind Café</h3>
+                    <p class="expr-vol-role">Charity Initiatives for Children with Autism</p>
+                    <p class="expr-vol-duration">Shanghai, China | 2021 - 2025</p>
+                    <ul class="expr-vol-responsibilities">
+                        <li>Organized inclusive events such as painting exhibitions, handmade cup workshops, and live concerts to support children with autism and their families, fostering creativity, development, and community awareness.</li>
+                    </ul>
+                </div>
+                <div class="expr-vol-history">
+                    <div class="expr-vol-company-icon"><img src="2015_World_Championships_in_Athletics_logo.png" alt="IAAF World Championships Logo" /></div>
+                    <h3 class="expr-vol-company">IAAF World Championships</h3>
+                    <p class="expr-vol-role">Journalist Volunteer</p>
+                    <p class="expr-vol-duration">Beijing, China | 2015</p>
+                    <ul class="expr-vol-responsibilities">
+                        <li>Covered the full race process, interviewed athletes and volunteers, and co-produced daily special editions of the championship. Recognized as Best Reporter among all journalist volunteers.</li>
+                    </ul>
+                </div>
+                <div class="expr-vol-history">
+                    <div class="expr-vol-company-icon"><img src="henry_logo.png" alt="Zhejiang Museum of Natural History Logo" /></div>
+                    <h3 class="expr-vol-company">Zhejiang Museum of Natural History</h3>
+                    <p class="expr-vol-role">Volunteer Guide</p>
+                    <p class="expr-vol-duration">Hangzhou, China | 2013 - 2017</p>
+                    <ul class="expr-vol-responsibilities">
+                        <li>Guided visitors through exhibitions, providing educational introductions and enhancing public engagement with natural history.</li>
+                    </ul>
+                </div>
+                <div class="expr-vol-history">
+                    <div class="expr-vol-company-icon"><img src="hangzhou_railway_station_logo.jpg" alt="Hangzhou Railway Station Logo" /></div>
+                    <h3 class="expr-vol-company">Hangzhou Railway Station</h3>
+                    <p class="expr-vol-role">Volunteer</p>
+                    <p class="expr-vol-duration">Hangzhou, China | Summer 2013</p>
+                    <ul class="expr-vol-responsibilities">
+                        <li>Assisted travelers with navigation, ticket purchases, and luggage claims, ensuring smooth passenger experiences in a high-traffic transportation hub.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!--
+        <div class="portfolio">
+            <h2>Portfolio</h2>
+        </div>
+        -->
+    </section>
+
+    <script>
+        'use strict';
+
+        function setFloatingExprTitles() {
+            const exprItems = [...document.querySelectorAll('.experience-item')];
+            exprItems.sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
+
+            const exprTitles = exprItems.map(item => item.querySelector('h2'));
+
+            const exprContent = exprItems.map(item => item.querySelector('.experience-content'));
+
+            window.addEventListener('scroll', function () {
+                const scrollY = window.scrollY;
+                const windowHeight = window.innerHeight;
+                console.log(scrollY, windowHeight);
+
+                for (let i = 0; i < exprItems.length; ++i) {
+                    const item = exprItems[i];
+                    const title = exprTitles[i];
+                    const content = exprContent[i];
+
+                    if (item.getBoundingClientRect().bottom < 0 || item.getBoundingClientRect().top >= windowHeight) {
+                        title.style.position = 'absolute';
+                        title.style.left = 'var(--expr-header-padding)';
+                        title.style.top = '0';
+                        continue;
+                    }
+
+                    const titleHeight = title.offsetHeight;
+                    if (content.getBoundingClientRect().bottom <= titleHeight) {
+                        title.style.position = 'absolute';
+                        title.style.left = 'var(--expr-header-padding)';
+                        title.style.top = 'auto';
+                        title.style.bottom = '2rem';
+                    } else if (item.getBoundingClientRect().top <= 0) {
+                        title.style.position = 'fixed';
+                        title.style.left = 'var(--expr-header-padding)';
+                        title.style.top = '0';
+                        title.style.bottom = 'auto';
+                    } else {
+                        title.style.position = 'absolute';
+                        title.style.left = 'var(--expr-header-padding)';
+                        title.style.top = '0';
+                        title.style.bottom = 'auto';
+                    }
+                }
+            });
+        }
+
+        window.addEventListener('load', function () {
+            setFloatingExprTitles();
+        });
+    </script>
+</body>
+</html>
